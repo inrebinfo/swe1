@@ -11,11 +11,7 @@ namespace EmbeddedSensorCloud
     {
         private StreamReader _requestReader;
         private string _requestedURL;
-
-        //GET /favicon.ico <-- ignore
-        //url split bei ? für file & parameter
-        //parameterteil split bei & für parameter-value-paar
-        //parameter split bei = für parametername und value
+        private CWebURL _URLObject;
 
         public CWebRequest(StreamReader reader)
         {
@@ -32,16 +28,34 @@ namespace EmbeddedSensorCloud
                 {
                     if (!buffer.Contains("favicon.ico"))
                     {
-                        Console.WriteLine(buffer);
                         string[] requestParts = buffer.Split(' ');
-                        foreach (string part in requestParts)
+
+                        string webUrl = requestParts[1].Substring(1);
+                        
+                        _URLObject = new CWebURL(webUrl);
+
+                        Console.WriteLine(_URLObject.WebAddress);
+
+                        try
                         {
-                            Console.WriteLine(part);
+                            Console.WriteLine(_URLObject.WebParameters["paddfdfram1"]);
                         }
+                        catch(Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+
+                        ParsePlugin();
                     }
                 }
-                //Console.WriteLine(buffer);
             }
+        }
+
+        private void ParsePlugin()
+        {
+            string plugin = _URLObject.WebAddress;
+            plugin = plugin.Remove(_URLObject.WebAddress.Length - 5);
+            Console.WriteLine("parseplugin: " + plugin);
         }
     }
 }

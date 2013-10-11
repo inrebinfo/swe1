@@ -8,12 +8,43 @@ namespace EmbeddedSensorCloud
 {
     class CWebURL
     {
-        private string _webAdress;
-        private string[] _webParameters;
+        private string _webAddress;
+        private Dictionary<string, string> _webParameters = new Dictionary<string, string>();
 
-        public CWebURL()
+        public CWebURL(string webUrl)
         {
+            string[] parts = webUrl.Split('?');
+            this._webAddress = parts[0];
+            if (parts.Length > 1)
+            {
+                createParameters(parts[1]);
+            }
+        }
 
+        private void createParameters(string parameters)
+        {
+            string[] pairs = parameters.Split('&');
+            foreach(string pair in pairs)
+            {
+                string[] parts = pair.Split('=');
+                _webParameters.Add(parts[0].ToString(), parts[1].ToString());
+            }
+        }
+
+        public string WebAddress
+        {
+            get
+            {
+                return this._webAddress;
+            }
+        }
+
+        public Dictionary<string, string> WebParameters
+        {
+            get
+            {
+                return this._webParameters;
+            }
         }
     }
 }
