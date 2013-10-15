@@ -1,0 +1,3 @@
+﻿CTemperature
+CStatic
+CNavi

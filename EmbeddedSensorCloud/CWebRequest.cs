@@ -12,6 +12,7 @@ namespace EmbeddedSensorCloud
         private StreamReader _requestReader;
         private string _requestedURL;
         private CWebURL _URLObject;
+        private string _requestedPlugin;
 
         public CWebRequest(StreamReader reader)
         {
@@ -34,28 +35,25 @@ namespace EmbeddedSensorCloud
                         
                         _URLObject = new CWebURL(webUrl);
 
-                        Console.WriteLine(_URLObject.WebAddress);
+                        Console.WriteLine("requested file " + _URLObject.WebAddress);
 
-                        try
+                        string plugin = _URLObject.WebAddress;
+                        if (plugin != "")
                         {
-                            Console.WriteLine(_URLObject.WebParameters["paddfdfram1"]);
+                            plugin = plugin.Remove(_URLObject.WebAddress.Length - 5);
+                            this._requestedPlugin = plugin;
                         }
-                        catch(Exception ex)
-                        {
-                            Console.WriteLine(ex.Message);
-                        }
-
-                        ParsePlugin();
                     }
                 }
             }
         }
 
-        private void ParsePlugin()
+        public string RequestedPlugin
         {
-            string plugin = _URLObject.WebAddress;
-            plugin = plugin.Remove(_URLObject.WebAddress.Length - 5);
-            Console.WriteLine("parseplugin: " + plugin);
+            get
+            {
+                return this._requestedPlugin;
+            }
         }
     }
 }

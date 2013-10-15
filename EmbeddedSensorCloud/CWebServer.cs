@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ namespace EmbeddedSensorCloud
     {
 
         private bool _isRunning;
+        private ArrayList _loadedPlugins;
 
         public void Start()
         {
@@ -69,38 +71,20 @@ namespace EmbeddedSensorCloud
             }*/
 
             CWebRequest WebRequest = new CWebRequest(ReaderForClient);
+            CPluginManager PluginManager = new CPluginManager();
+            _loadedPlugins = PluginManager.LoadPlugins(@"\plugins\", "*.dll", typeof(EmbeddedSensorCloud.IPlugin));
+
+            foreach (IPlugin plug in _loadedPlugins)
+            {
+                if (plug.PluginName == WebRequest.RequestedPlugin)
+                {
+                    Console.WriteLine("requested plugin: " + plug.PluginName);
+                }
+            }
+
+            
 
             Console.WriteLine();
-
-            #region defaultfiles
-            //defaultfiles
-            /*string[] defaultFiles = new string[] { "index.html", "index.htm", "default.html", "default.htm" };
-            string defaultFile = "";
-
-            int ii = 0;
-
-            while (ii <= defaultFiles.Length)
-            {
-                if (defaultFile == "")
-                {
-                    if (File.Exists(defaultFiles[ii]))
-                    {
-                        defaultFile = defaultFiles[ii];
-                    }
-                }
-                ii++;
-            }
-
-            //handle the requested file (TODO)
-            if (defaultFile == "")
-            {
-
-            }
-
-            StreamReader fileReader = new StreamReader(defaultFile);
-            FileInfo FI = new FileInfo(defaultFile);
-            string sSize = Convert.ToString(FI.Length);*/
-            #endregion
 
             string html = "<html><head><title>EmbeddedSensorCloud</title></head><body><h1>It works!</h1>" + DateTime.Now.ToString() + "</body></html>";
 

@@ -1,0 +1,6 @@
+D:\Dropbox\SWE\EmbeddedSensorCloud\CStatic\bin\Debug\CStatic.dll
+D:\Dropbox\SWE\EmbeddedSensorCloud\CStatic\bin\Debug\CStatic.pdb
+D:\Dropbox\SWE\EmbeddedSensorCloud\CStatic\bin\Debug\EmbeddedSensorCloud.exe
+D:\Dropbox\SWE\EmbeddedSensorCloud\CStatic\bin\Debug\EmbeddedSensorCloud.pdb
+D:\Dropbox\SWE\EmbeddedSensorCloud\CStatic\obj\Debug\CStatic.dll
+D:\Dropbox\SWE\EmbeddedSensorCloud\CStatic\obj\Debug\CStatic.pdb

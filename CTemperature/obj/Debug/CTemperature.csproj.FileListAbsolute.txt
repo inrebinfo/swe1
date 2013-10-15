@@ -1,0 +1,7 @@
+D:\Dropbox\SWE\EmbeddedSensorCloud\CTemperature\bin\Debug\CTemperature.dll
+D:\Dropbox\SWE\EmbeddedSensorCloud\CTemperature\bin\Debug\CTemperature.pdb
+D:\Dropbox\SWE\EmbeddedSensorCloud\CTemperature\bin\Debug\EmbeddedSensorCloud.exe
+D:\Dropbox\SWE\EmbeddedSensorCloud\CTemperature\bin\Debug\EmbeddedSensorCloud.pdb
+D:\Dropbox\SWE\EmbeddedSensorCloud\CTemperature\obj\Debug\CTemperature.csprojResolveAssemblyReference.cache
+D:\Dropbox\SWE\EmbeddedSensorCloud\CTemperature\obj\Debug\CTemperature.dll
+D:\Dropbox\SWE\EmbeddedSensorCloud\CTemperature\obj\Debug\CTemperature.pdb
