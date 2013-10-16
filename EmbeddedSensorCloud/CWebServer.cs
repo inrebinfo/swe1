@@ -48,11 +48,6 @@ namespace EmbeddedSensorCloud
         {
             Socket sClient = (Socket)SessionClient;
 
-            //sexy request message
-            /*Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Request from " + sClient.LocalEndPoint + " in Thread ID: " + Thread.CurrentThread.ManagedThreadId.ToString());
-            Console.ResetColor();*/
-
             //networkstream for the data between the client and us
             NetworkStream StreamFromClient = new NetworkStream(sClient);
 
@@ -61,14 +56,6 @@ namespace EmbeddedSensorCloud
 
             //we also need to read something
             StreamReader ReaderForClient = new StreamReader(StreamFromClient);
-
-            //http header with get request
-            /*string buffer;
-
-            while ((buffer = ReaderForClient.ReadLine()) != "")
-            {
-                Console.WriteLine(sClient.LocalEndPoint + " -> Server: " + buffer);
-            }*/
 
             CWebRequest WebRequest = new CWebRequest(ReaderForClient);
             CPluginManager PluginManager = new CPluginManager();
@@ -82,31 +69,30 @@ namespace EmbeddedSensorCloud
                 }
             }
 
-            
+
+            try
+            {
+                CWebURL url = WebRequest.URLObject;
+                Console.WriteLine("file: " + url.WebAddress);
+                foreach (KeyValuePair<string, string> entry in url.WebParameters)
+                {
+                    Console.WriteLine("key, value:" + entry.Key + ", " + entry.Value);
+                }
+            }
+            catch { }
+
+            //DO HERE WHAT THE PLUGIN HAS TO DO!
 
             Console.WriteLine();
 
-            string html = "<html><head><title>EmbeddedSensorCloud</title></head><body><h1>It works!</h1>" + DateTime.Now.ToString() + "</body></html>";
 
-            int size = ASCIIEncoding.ASCII.GetByteCount(html);
-
-            //encapsulate response!
-            WriterForClient.WriteLine("HTTP/1.1 200 OK");
-            WriterForClient.WriteLine("Server: EmbeddedSensorCloud Server");
-            WriterForClient.WriteLine("Content-Length: " + size);
-            WriterForClient.WriteLine("Content-Language: de");
-            WriterForClient.WriteLine("Content-Type: text/html");
-            WriterForClient.WriteLine("Connection: close");
-            WriterForClient.WriteLine("");
-
-            //write file
-            //WriterForClient.WriteLine(fileReader.ReadToEnd());
-            WriterForClient.WriteLine(html);
+            //CREATE RESPONSE
+            CWebResponse response = new CWebResponse(WriterForClient);
+            response.WriteResponse();
 
             WriterForClient.Flush();
 
             //close all writers and readers
-            //fileReader.Close();
             StreamFromClient.Close();
             WriterForClient.Close();
             ReaderForClient.Close();

@@ -45,6 +45,19 @@ namespace EmbeddedSensorCloud
                         }
                     }
                 }
+                Console.WriteLine(buffer);
+                /*else if (buffer.StartsWith("POST"))
+                {
+                    string[] lines = theText.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
+
+                    string[] requestParts = buffer.Split(' ');
+
+                    string webUrl = requestParts[1].Substring(1);
+                    
+                    Console.WriteLine("post");
+
+                    
+                }*/
             }
         }
 
@@ -53,6 +66,14 @@ namespace EmbeddedSensorCloud
             get
             {
                 return this._requestedPlugin;
+            }
+        }
+
+        public CWebURL URLObject
+        {
+            get
+            {
+                return this._URLObject;
             }
         }
     }
