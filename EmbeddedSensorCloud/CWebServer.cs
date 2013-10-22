@@ -57,9 +57,9 @@ namespace EmbeddedSensorCloud
             //we also need to read something
             StreamReader ReaderForClient = new StreamReader(StreamFromClient);
 
-            CWebRequest WebRequest = new CWebRequest(ReaderForClient);
+            CWebRequest WebRequest = new CWebRequest(ReaderForClient, sClient);
             CPluginManager PluginManager = new CPluginManager();
-            _loadedPlugins = PluginManager.LoadPlugins(@"\plugins\", "*.dll", typeof(EmbeddedSensorCloud.IPlugin));
+            _loadedPlugins = PluginManager.LoadPlugins("/plugins/", "*.dll", typeof(EmbeddedSensorCloud.IPlugin));
 
             foreach (IPlugin plug in _loadedPlugins)
             {

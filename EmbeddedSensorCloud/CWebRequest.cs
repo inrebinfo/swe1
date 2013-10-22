@@ -4,25 +4,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net;
+using System.Net.Sockets;
 
 namespace EmbeddedSensorCloud
 {
     class CWebRequest
     {
         private StreamReader _requestReader;
+        private Socket _socket;
         private string _requestedURL;
         private CWebURL _URLObject;
         private string _requestedPlugin;
 
-        public CWebRequest(StreamReader reader)
+        public CWebRequest(StreamReader reader, Socket sock)
         {
             this._requestReader = reader;
+            this._socket = sock;
+
             ParseRequest();
         }
-        
+
         private void ParseRequest()
         {
             string buffer;
+            int postLength = 0;
+            bool post = false;
             while ((buffer = _requestReader.ReadLine()) != "")
             {
                 if (buffer.StartsWith("GET"))
@@ -32,7 +39,7 @@ namespace EmbeddedSensorCloud
                         string[] requestParts = buffer.Split(' ');
 
                         string webUrl = requestParts[1].Substring(1);
-                        
+
                         _URLObject = new CWebURL(webUrl);
 
                         Console.WriteLine("requested file " + _URLObject.WebAddress);
@@ -45,20 +52,30 @@ namespace EmbeddedSensorCloud
                         }
                     }
                 }
-                Console.WriteLine(buffer);
-                /*else if (buffer.StartsWith("POST"))
+                else if (buffer.StartsWith("POST"))
                 {
-                    string[] lines = theText.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
-
+                    post = true;
                     string[] requestParts = buffer.Split(' ');
 
                     string webUrl = requestParts[1].Substring(1);
-                    
-                    Console.WriteLine("post");
-
-                    
-                }*/
+                }
+                else if (buffer.StartsWith("Content-Length"))
+                {
+                    string[] parts = buffer.Split(' ');
+                    postLength = Convert.ToInt32(parts[1]);
+                }
+                Console.WriteLine(buffer);
             }
+
+            if (post && postLength > 0)
+            {
+                //POST Params auslesen
+                var buf = new char[postLength];
+                _requestReader.Read(buf, 0, postLength);
+                string bodystr = new string(buf);
+                Console.WriteLine(bodystr);
+            }
+
         }
 
         public string RequestedPlugin

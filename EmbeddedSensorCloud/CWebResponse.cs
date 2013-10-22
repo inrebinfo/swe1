@@ -23,7 +23,20 @@ namespace EmbeddedSensorCloud
 
         public void WriteResponse()
         {
-            string html = "<html><head><title>EmbeddedSensorCloud</title></head><body><h1>It works!</h1>" + DateTime.Now.ToString() + "<form method='post' action='http://localhost:1337/'><input type='text' name'param1'></form></body></html>";
+            string html = @"
+            <html>
+                <head>
+                    <title>EmbeddedSensorCloud</title>
+                </head>
+                <body>
+                    <h1>It works!</h1>
+                    <form method='post' action='http://localhost:1337/'>
+                        <input type='text' name='param1'><br>
+                        <input type='text' name='param2'>
+                        <input type='submit'>
+                    </form>
+                </body>
+            </html>";
 
             int size = ASCIIEncoding.ASCII.GetByteCount(html);
 
