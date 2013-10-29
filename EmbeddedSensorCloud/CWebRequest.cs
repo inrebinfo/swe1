@@ -28,8 +28,12 @@ namespace EmbeddedSensorCloud
         private void ParseRequest()
         {
             string buffer;
+
             int postLength = 0;
             bool post = false;
+            string postURL = "";
+            string postParameters = "";
+
             while ((buffer = _requestReader.ReadLine()) != "")
             {
                 if (buffer.StartsWith("GET"))
@@ -40,7 +44,16 @@ namespace EmbeddedSensorCloud
 
                         string webUrl = requestParts[1].Substring(1);
 
-                        _URLObject = new CWebURL(webUrl);
+                        string[] parts = webUrl.Split('?');
+
+                        if (parts.Length > 1)
+                        {
+                            _URLObject = new CWebURL(parts[0], parts[1]);
+                        }
+                        else
+                        {
+                            _URLObject = new CWebURL(parts[0]);
+                        }
 
                         Console.WriteLine("requested file " + _URLObject.WebAddress);
 
@@ -57,7 +70,7 @@ namespace EmbeddedSensorCloud
                     post = true;
                     string[] requestParts = buffer.Split(' ');
 
-                    string webUrl = requestParts[1].Substring(1);
+                    postURL = requestParts[1].Substring(1);
                 }
                 else if (buffer.StartsWith("Content-Length"))
                 {
@@ -67,13 +80,19 @@ namespace EmbeddedSensorCloud
                 Console.WriteLine(buffer);
             }
 
-            if (post && postLength > 0)
+            if (post && postLength == 0)
+            {
+                _URLObject = new CWebURL(postURL);
+            }
+            else if (post && postLength > 0)
             {
                 //POST Params auslesen
                 var buf = new char[postLength];
                 _requestReader.Read(buf, 0, postLength);
                 string bodystr = new string(buf);
-                Console.WriteLine(bodystr);
+
+                postParameters = bodystr;
+                _URLObject = new CWebURL(postURL, postParameters);
             }
 
         }

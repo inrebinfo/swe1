@@ -11,14 +11,15 @@ namespace EmbeddedSensorCloud
         private string _webAddress;
         private Dictionary<string, string> _webParameters = new Dictionary<string, string>();
 
-        public CWebURL(string webUrl)
+        public CWebURL(string address)
         {
-            string[] parts = webUrl.Split('?');
-            this._webAddress = parts[0];
-            if (parts.Length > 1)
-            {
-                createParameters(parts[1]);
-            }
+            this._webAddress = address;
+        }
+
+        public CWebURL(string address, string parameters)
+        {
+            this._webAddress = address;
+            createParameters(parameters);
         }
 
         private void createParameters(string parameters)
