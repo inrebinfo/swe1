@@ -78,8 +78,6 @@ namespace EmbeddedSensorCloud
                 }
             }
 
-
-
             Console.WriteLine();
 
 

@@ -93,6 +93,14 @@ namespace EmbeddedSensorCloud
 
                 postParameters = bodystr;
                 _URLObject = new CWebURL(postURL, postParameters);
+
+
+                string plugin = _URLObject.WebAddress;
+                if (plugin != "")
+                {
+                    plugin = plugin.Remove(_URLObject.WebAddress.Length - 5);
+                    this._requestedPlugin = plugin;
+                }
             }
 
         }

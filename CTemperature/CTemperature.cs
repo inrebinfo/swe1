@@ -46,7 +46,41 @@ namespace CTemperature
 
                 Console.WriteLine("parameters given");
 
+                string command = "";
+                string selectday = "";
+                string limit = "";
+
+                foreach (KeyValuePair<string, string> entry in _url.WebParameters)
+                {
+                    if (entry.Key == "day")
+                    {
+                        Console.WriteLine("value for day: " + entry.Value);
+                        selectday = entry.Value;
+                    }
+
+                    if (entry.Key == "limit")
+                    {
+                        if (entry.Value != "")
+                        {
+                            limit = "TOP " + entry.Value;
+                        }
+                    }
+                }
+
+                command = "SELECT " + limit + " * FROM [temperatures] WHERE [day] = '" + selectday + "' ORDER BY [id] DESC";
                 
+                SqlCommand cmd = new SqlCommand(command, _SQLCon);
+
+                string res = "";
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    string day = reader["day"].ToString();
+                    string[] dayparts = day.Split(' ');
+                    res += "<tr><td>" + reader["id"] + "</td><td>" + dayparts[0] + "</td><td>" + reader["temp"] + "</td></tr>";
+                    //Console.WriteLine("day: " + reader["day"] + " --- temp: " + reader["temp"]);
+                }
 
                 string html = @"
 <html>
@@ -56,11 +90,16 @@ namespace CTemperature
     <body>
         <h1>TemperaturePlugin</h1>
         <form method='post' action='http://localhost:8080/TemperaturePlugin.html'>
-            Enter Day (dd-mm-yyyy)<input type='text' name='day'><br>
+            Enter Day (yyyy-mm-dd) <input type='text' name='day'><br>
+            Last x Entries (all by default) <input type='text' name='limit'><br>
             <input type='submit'>
         </form>
         <br>
-        <p>Parameters given!</p>
+        <h1>All temperatures from " + selectday + @"</h1>
+        <table border='1'>
+            <tr><th>#</th><th>Day</th><th>Temperature</th></tr>" +
+            res +
+        @"</table>
     </body>
 </html>";
 
@@ -84,7 +123,7 @@ namespace CTemperature
 
                 Console.WriteLine("no parameters given");
                 
-                string command = "SELECT * FROM temperatures WHERE day = '" + today + "'";
+                string command = "SELECT * FROM [temperatures] WHERE [day] = '" + today + "' ORDER BY [id] DESC";
                 SqlCommand cmd = new SqlCommand(command, _SQLCon);
 
                 string res = "";
@@ -94,7 +133,7 @@ namespace CTemperature
                 {
                     string day = reader["day"].ToString();
                     string[] dayparts = day.Split(' ');
-                    res += "<tr><td>" + dayparts[0] + "</td><td>" + reader["temp"] + "</td></tr>";
+                    res += "<tr><td>" + reader["id"] + "</td><td>" + dayparts[0] + "</td><td>" + reader["temp"] + "</td></tr>";
                     //Console.WriteLine("day: " + reader["day"] + " --- temp: " + reader["temp"]);
                 }
 
@@ -106,12 +145,14 @@ namespace CTemperature
     <body>
         <h1>TemperaturePlugin</h1>
         <form method='post' action='http://localhost:8080/TemperaturePlugin.html'>
-            Enter Day (dd-mm-yyyy)<input type='text' name='day'><br>
+            Enter Day (yyyy-mm-dd) <input type='text' name='day'><br>
+            Last x Entries (all by default) <input type='text' name='limit'><br>
             <input type='submit'>
         </form>
         <br>
-        <table>
-            <tr><th>Day</th><th>Temperature</th></tr>" + 
+        <h1>All temperatures from today (" + today + @")</h1>
+        <table border='1'>
+            <tr><th>#</th><th>Day</th><th>Temperature</th></tr>" + 
             res +   
         @"</table>
     </body>
