@@ -22,11 +22,13 @@ namespace CTemperature
             _writer = writer;
             _url = url;
 
-            _SQLCon = new SqlConnection();
+            _SQLCon = new SqlConnection(
 
-            _SQLCon.ConnectionString = "Data Source=(local);" +
-                       "Initial Catalog=EmbeddedSensorCloud;" +
-                       "Integrated Security=sspi";
+                @"Data Source=.\SqlExpress;
+
+                Initial Catalog=EmbeddedSensorCloud;
+
+                Integrated Security=true;");
             _SQLCon.Open();
         }
 
@@ -36,19 +38,12 @@ namespace CTemperature
             string today = now.ToString("dd-MM-yyyy");
             Console.WriteLine("Today is: " + today);
 
-            Console.WriteLine(_pluginName + " did sosdmething");
-
-            string command = "SELECT * FROM temperatures WHERE day = '" + today + "'";
-            SqlCommand cmd = new SqlCommand(command, _SQLCon);
+            Console.WriteLine(_pluginName + " did something");
             
-            SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                Console.WriteLine("day: " + reader["day"] + " --- temp: " + reader["temp"]);
-            }
-
             if (_url.WebParameters.Count > 0)
             {
+                #region parameters given
+
                 Console.WriteLine("parameters given");
 
                 
@@ -80,10 +75,28 @@ namespace CTemperature
 
                 CWebResponse response = new CWebResponse(_writer);
                 response.WriteResponse(header, html);
+
+                #endregion
             }
             else
             {
+                #region no parameters given
+
                 Console.WriteLine("no parameters given");
+                
+                string command = "SELECT * FROM temperatures WHERE day = '" + today + "'";
+                SqlCommand cmd = new SqlCommand(command, _SQLCon);
+
+                string res = "";
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    string day = reader["day"].ToString();
+                    string[] dayparts = day.Split(' ');
+                    res += "<tr><td>" + dayparts[0] + "</td><td>" + reader["temp"] + "</td></tr>";
+                    //Console.WriteLine("day: " + reader["day"] + " --- temp: " + reader["temp"]);
+                }
 
                 string html = @"
 <html>
@@ -97,7 +110,10 @@ namespace CTemperature
             <input type='submit'>
         </form>
         <br>
-        <p>No Parameters given!</p>
+        <table>
+            <tr><th>Day</th><th>Temperature</th></tr>" + 
+            res +   
+        @"</table>
     </body>
 </html>";
 
@@ -112,9 +128,9 @@ namespace CTemperature
 
                 CWebResponse response = new CWebResponse(_writer);
                 response.WriteResponse(header, html);
+
+                #endregion
             }
-
-
         }
 
         public void Clean()

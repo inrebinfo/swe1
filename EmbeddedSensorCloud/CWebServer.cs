@@ -79,17 +79,6 @@ namespace EmbeddedSensorCloud
             }
 
 
-            /*try
-            {
-                Console.WriteLine("file: " + url.WebAddress);
-                foreach (KeyValuePair<string, string> entry in url.WebParameters)
-                {
-                    Console.WriteLine("key, value:" + entry.Key + ", " + entry.Value);
-                }
-            }
-            catch { }*/
-
-            //DO HERE WHAT THE PLUGIN HAS TO DO!
 
             Console.WriteLine();
 
