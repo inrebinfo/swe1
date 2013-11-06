@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EmbeddedSensorCloud
 {
-    class CWebResponse
+    public class CWebResponse
     {
         private StreamWriter _ResponseWriter;
         private string _status;
@@ -21,36 +21,11 @@ namespace EmbeddedSensorCloud
 
         //public CWebResponse(StreamWriter writer, 
 
-        public void WriteResponse()
+        public void WriteResponse(string responseHeader, string responseString)
         {
-            string html = @"
-            <html>
-                <head>
-                    <title>EmbeddedSensorCloud</title>
-                </head>
-                <body>
-                    <h1>It works!</h1>
-                    <form method='post' action='http://localhost:1337/'>
-                        <input type='text' name='param1'><br>
-                        <input type='text' name='param2'>
-                        <input type='submit'>
-                    </form>
-                </body>
-            </html>";
-
-            int size = ASCIIEncoding.ASCII.GetByteCount(html);
-
-            //encapsulate response!
-            _ResponseWriter.WriteLine("HTTP/1.1 200 OK");
-            _ResponseWriter.WriteLine("Server: EmbeddedSensorCloud Server");
-            _ResponseWriter.WriteLine("Content-Length: " + size);
-            _ResponseWriter.WriteLine("Content-Language: de");
-            _ResponseWriter.WriteLine("Content-Type: text/html");
-            _ResponseWriter.WriteLine("Connection: close");
+            _ResponseWriter.Write(responseHeader);
             _ResponseWriter.WriteLine("");
-
-            //write file
-            _ResponseWriter.WriteLine(html);
+            _ResponseWriter.Write(responseString);
             _ResponseWriter.Flush();
         }
     }

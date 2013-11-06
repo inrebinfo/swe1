@@ -25,9 +25,9 @@ namespace EmbeddedSensorCloud
 
         public void RunServer()
         {
-            Console.WriteLine("Server now listening on port 1337\n");
+            Console.WriteLine("Server now listening on port 8080\n");
             //start listener on port 1337
-            TcpListener listener = new TcpListener(IPAddress.Any, 1337);
+            TcpListener listener = new TcpListener(IPAddress.Any, 8080);
             listener.Start();
 
             //loop for server instances
@@ -58,28 +58,36 @@ namespace EmbeddedSensorCloud
             StreamReader ReaderForClient = new StreamReader(StreamFromClient);
 
             CWebRequest WebRequest = new CWebRequest(ReaderForClient, sClient);
+            
+            CWebURL url = WebRequest.URLObject;
+
             CPluginManager PluginManager = new CPluginManager();
             _loadedPlugins = PluginManager.LoadPlugins("/plugins/", "*.dll", typeof(EmbeddedSensorCloud.IPlugin));
+
+            int counter = 0;
 
             foreach (IPlugin plug in _loadedPlugins)
             {
                 if (plug.PluginName == WebRequest.RequestedPlugin)
                 {
+                    counter++;
                     Console.WriteLine("requested plugin: " + plug.PluginName);
+
+                    plug.Load(WriterForClient, url);
+                    plug.doSomething();
                 }
             }
 
 
-            try
+            /*try
             {
-                CWebURL url = WebRequest.URLObject;
                 Console.WriteLine("file: " + url.WebAddress);
                 foreach (KeyValuePair<string, string> entry in url.WebParameters)
                 {
                     Console.WriteLine("key, value:" + entry.Key + ", " + entry.Value);
                 }
             }
-            catch { }
+            catch { }*/
 
             //DO HERE WHAT THE PLUGIN HAS TO DO!
 
@@ -87,10 +95,33 @@ namespace EmbeddedSensorCloud
 
 
             //CREATE RESPONSE
-            CWebResponse response = new CWebResponse(WriterForClient);
-            response.WriteResponse();
+            if (counter == 0)
+            {
+                string html = @"
+<html>
+    <head>
+        <title>EmbeddedSensorCloud</title>
+    </head>
+    <body>
+        <h1>EmbeddedSensorCloud</h1>
+        <p><a href='TemperaturePlugin.html'>Temperature Plugin</a></p>
+        <p><a href='StaticPlugin.html'>Static Plugin</a></p>
+        <p><a href='NaviPlugin.html'>Navi Plugin</a></p>
+    </body>
+</html>";
 
-            WriterForClient.Flush();
+                int size = ASCIIEncoding.ASCII.GetByteCount(html);
+
+                string header = @"HTTP/1.1 200 OK
+                    Server: EmbeddedSensorCloud Server
+                    Content-Length: " + size + @"
+                    Content-Language: de
+                    Content-Type: text/html
+                    Connection: close";
+
+                CWebResponse response = new CWebResponse(WriterForClient);
+                response.WriteResponse(header, html);
+            }
 
             //close all writers and readers
             StreamFromClient.Close();

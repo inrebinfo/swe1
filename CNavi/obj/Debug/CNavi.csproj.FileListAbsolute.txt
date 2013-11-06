@@ -4,3 +4,4 @@ D:\Dropbox\SWE\EmbeddedSensorCloud\CNavi\bin\Debug\EmbeddedSensorCloud.exe
 D:\Dropbox\SWE\EmbeddedSensorCloud\CNavi\bin\Debug\EmbeddedSensorCloud.pdb
 D:\Dropbox\SWE\EmbeddedSensorCloud\CNavi\obj\Debug\CNavi.dll
 D:\Dropbox\SWE\EmbeddedSensorCloud\CNavi\obj\Debug\CNavi.pdb
+D:\Dropbox\SWE\EmbeddedSensorCloud\CNavi\obj\Debug\CNavi.csprojResolveAssemblyReference.cache

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EmbeddedSensorCloud
 {
-    class CWebURL
+    public class CWebURL
     {
         private string _webAddress;
         private Dictionary<string, string> _webParameters = new Dictionary<string, string>();
