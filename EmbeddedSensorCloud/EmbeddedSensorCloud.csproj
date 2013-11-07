@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CHeader.cs" />
     <Compile Include="CPluginManager.cs" />
     <Compile Include="CWebRequest.cs" />
     <Compile Include="CWebResponse.cs" />
