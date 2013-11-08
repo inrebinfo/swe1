@@ -99,15 +99,10 @@ namespace EmbeddedSensorCloud
 
                 int size = ASCIIEncoding.ASCII.GetByteCount(html);
 
-                string header = @"HTTP/1.1 200 OK
-                    Server: EmbeddedSensorCloud Server
-                    Content-Length: " + size + @"
-                    Content-Language: de
-                    Content-Type: text/html
-                    Connection: close";
-
                 CWebResponse response = new CWebResponse(WriterForClient);
-                response.WriteResponse(header, html);
+                response.ContentLength = html.Length;
+                response.ContentType = "text/html";
+                response.WriteResponse(html);
             }
 
             //close all writers and readers

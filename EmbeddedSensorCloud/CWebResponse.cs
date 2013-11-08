@@ -16,45 +16,7 @@ namespace EmbeddedSensorCloud
         private string _contentDisposition;
         private List<CHeader> _headers;
 
-        public int ContentLength
-        {
-            get { return _contentLength; }
-            set { 
-                _contentLength = value;
-                CHeader toDelete = (from s in _headers
-                               where s.Name == "Content-Length"
-                               select s).FirstOrDefault();
-                _headers.Remove(toDelete);
-                _headers.Add(new CHeader("Content-Length", value.ToString()));
-            }
-        }
-
-        public string ContentType
-        {
-            get { return _contentType; }
-            set { 
-                _contentType = value;
-                CHeader toDelete = (from s in _headers
-                                    where s.Name == "Content-Type"
-                                    select s).FirstOrDefault();
-                _headers.Remove(toDelete);
-                _headers.Add(new CHeader("Content-Type",value));
-            }
-        }
-
-        public string ContentDisposition
-        {
-            get { return _contentDisposition; }
-            set
-            {
-                _contentDisposition = value;
-                CHeader toDelete = (from s in _headers
-                                    where s.Name == "Content-disposition: attachment; filename="
-                                    select s).FirstOrDefault();
-                _headers.Remove(toDelete);
-                _headers.Add(new CHeader("Content-disposition: attachment; filename=", value.ToString()));
-            }
-        }
+        
 
         public CWebResponse(StreamWriter writer)
         {
@@ -65,14 +27,14 @@ namespace EmbeddedSensorCloud
             _ResponseWriter = writer;
         }
 
-        public void WriteResponse(string responseHeader, string responseString)
+        public void WriteResponse(string responseString)
         {
             WriteHeader();
             _ResponseWriter.Write(responseString);
             _ResponseWriter.Flush();
         }
 
-        public void WriteResponse(string responseHeader, byte[] responseArray)
+        public void WriteResponse(byte[] responseArray)
         {
             WriteHeader();
             _ResponseWriter.BaseStream.Write(responseArray, 0, responseArray.Length);
@@ -88,6 +50,48 @@ namespace EmbeddedSensorCloud
             }
             _ResponseWriter.Write(System.Environment.NewLine);
             _ResponseWriter.Flush();
+        }
+
+        public int ContentLength
+        {
+            get { return _contentLength; }
+            set
+            {
+                _contentLength = value;
+                CHeader toDelete = (from s in _headers
+                                    where s.Name == "Content-Length"
+                                    select s).FirstOrDefault();
+                _headers.Remove(toDelete);
+                _headers.Add(new CHeader("Content-Length", value.ToString()));
+            }
+        }
+
+        public string ContentType
+        {
+            get { return _contentType; }
+            set
+            {
+                _contentType = value;
+                CHeader toDelete = (from s in _headers
+                                    where s.Name == "Content-Type"
+                                    select s).FirstOrDefault();
+                _headers.Remove(toDelete);
+                _headers.Add(new CHeader("Content-Type", value));
+            }
+        }
+
+        public string ContentDisposition
+        {
+            get { return _contentDisposition; }
+            set
+            {
+                _contentDisposition = value;
+                CHeader toDelete = (from s in _headers
+                                    where s.Name == "Content-disposition: attachment; filename="
+                                    select s).FirstOrDefault();
+                _headers.Remove(toDelete);
+                _headers.Add(new CHeader("Content-disposition: attachment; filename=", value.ToString()));
+            }
         }
     }
 }

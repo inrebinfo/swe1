@@ -36,48 +36,55 @@ namespace EmbeddedSensorCloud
 
             while ((buffer = _requestReader.ReadLine()) != "")
             {
-                if (buffer.StartsWith("GET"))
+                try
                 {
-                    if (!buffer.Contains("favicon.ico"))
+                    if (buffer.StartsWith("GET"))
                     {
-                        string[] requestParts = buffer.Split(' ');
-
-                        string webUrl = requestParts[1].Substring(1);
-
-                        string[] parts = webUrl.Split('?');
-
-                        if (parts.Length > 1)
+                        if (!buffer.Contains("favicon.ico"))
                         {
-                            _URLObject = new CWebURL(parts[0], parts[1]);
-                        }
-                        else
-                        {
-                            _URLObject = new CWebURL(parts[0]);
-                        }
+                            string[] requestParts = buffer.Split(' ');
 
-                        Console.WriteLine("requested file " + _URLObject.WebAddress);
+                            string webUrl = requestParts[1].Substring(1);
 
-                        string plugin = _URLObject.WebAddress;
-                        if (plugin != "")
-                        {
-                            plugin = plugin.Remove(_URLObject.WebAddress.Length - 5);
-                            this._requestedPlugin = plugin;
+                            string[] parts = webUrl.Split('?');
+
+                            if (parts.Length > 1)
+                            {
+                                _URLObject = new CWebURL(parts[0], parts[1]);
+                            }
+                            else
+                            {
+                                _URLObject = new CWebURL(parts[0]);
+                            }
+
+                            Console.WriteLine("requested file " + _URLObject.WebAddress);
+
+                            string plugin = _URLObject.WebAddress;
+                            if (plugin != "")
+                            {
+                                plugin = plugin.Remove(_URLObject.WebAddress.Length - 5);
+                                this._requestedPlugin = plugin;
+                            }
                         }
                     }
-                }
-                else if (buffer.StartsWith("POST"))
-                {
-                    post = true;
-                    string[] requestParts = buffer.Split(' ');
+                    else if (buffer.StartsWith("POST"))
+                    {
+                        post = true;
+                        string[] requestParts = buffer.Split(' ');
 
-                    postURL = requestParts[1].Substring(1);
+                        postURL = requestParts[1].Substring(1);
+                    }
+                    else if (buffer.StartsWith("Content-Length"))
+                    {
+                        string[] parts = buffer.Split(' ');
+                        postLength = Convert.ToInt32(parts[1]);
+                    }
+                    Console.WriteLine(buffer);
                 }
-                else if (buffer.StartsWith("Content-Length"))
+                catch (Exception ex)
                 {
-                    string[] parts = buffer.Split(' ');
-                    postLength = Convert.ToInt32(parts[1]);
+                    Console.WriteLine(ex.Message);
                 }
-                Console.WriteLine(buffer);
             }
 
             if (post && postLength == 0)

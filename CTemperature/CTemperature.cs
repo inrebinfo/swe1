@@ -23,12 +23,10 @@ namespace CTemperature
             _url = url;
 
             _SQLCon = new SqlConnection(
-
                 @"Data Source=.\SqlExpress;
-
                 Initial Catalog=EmbeddedSensorCloud;
-
                 Integrated Security=true;");
+
             _SQLCon.Open();
         }
 
@@ -105,15 +103,10 @@ namespace CTemperature
 
                 int size = ASCIIEncoding.ASCII.GetByteCount(html);
 
-                string header = @"HTTP/1.1 200 OK
-                    Server: EmbeddedSensorCloud Server
-                    Content-Length: " + size + @"
-                    Content-Language: de
-                    Content-Type: text/html
-                    Connection: close";
-
                 CWebResponse response = new CWebResponse(_writer);
-                response.WriteResponse(header, html);
+                response.ContentLength = html.Length;
+                response.ContentType = "text/html";
+                response.WriteResponse(html);
 
                 #endregion
             }
@@ -160,15 +153,10 @@ namespace CTemperature
 
                 int size = ASCIIEncoding.ASCII.GetByteCount(html);
 
-                string header = @"HTTP/1.1 200 OK
-                    Server: EmbeddedSensorCloud Server
-                    Content-Length: " + size + @"
-                    Content-Language: de
-                    Content-Type: text/html
-                    Connection: close";
-
                 CWebResponse response = new CWebResponse(_writer);
-                response.WriteResponse(header, html);
+                response.ContentLength = html.Length;
+                response.ContentType = "text/html";
+                response.WriteResponse(html);
 
                 #endregion
             }
