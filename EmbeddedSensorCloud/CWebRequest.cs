@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
+using System.Text.RegularExpressions;
 
 namespace EmbeddedSensorCloud
 {
@@ -46,25 +47,55 @@ namespace EmbeddedSensorCloud
 
                             string webUrl = requestParts[1].Substring(1);
 
-                            string[] parts = webUrl.Split('?');
 
-                            if (parts.Length > 1)
+                            string regex = @"^GetTemperature/\d{4}-\d{2}-\d{2}$";
+                            RegexOptions options = RegexOptions.Multiline;
+
+                            Match match = Regex.Match(webUrl, regex, options);
+
+                            if (match.Success)
                             {
-                                _URLObject = new CWebURL(parts[0], parts[1]);
+                                //gettemperature part
+                                string[] parts = webUrl.Split('/');
+
+                                if (parts.Length == 2)
+                                {
+                                    string param = "rest=" + parts[1];
+                                    _URLObject = new CWebURL("TemperaturePlugin.html", param);
+                                }
+
+                                string plugin = _URLObject.WebAddress;
+                                if (plugin != "")
+                                {
+                                    plugin = plugin.Remove(_URLObject.WebAddress.Length - 5);
+                                    this._requestedPlugin = plugin;
+                                }
                             }
                             else
                             {
-                                _URLObject = new CWebURL(parts[0]);
+                                string[] parts = webUrl.Split('?');
+
+                                if (parts.Length > 1)
+                                {
+                                    _URLObject = new CWebURL(parts[0], parts[1]);
+                                }
+                                else
+                                {
+                                    _URLObject = new CWebURL(parts[0]);
+                                }
+
+                                string plugin = _URLObject.WebAddress;
+                                if (plugin != "")
+                                {
+                                    plugin = plugin.Remove(_URLObject.WebAddress.Length - 5);
+                                    this._requestedPlugin = plugin;
+                                }
                             }
 
-                            Console.WriteLine("requested file " + _URLObject.WebAddress);
+                            //Console.WriteLine("requested file " + _URLObject.WebAddress);
 
-                            string plugin = _URLObject.WebAddress;
-                            if (plugin != "")
-                            {
-                                plugin = plugin.Remove(_URLObject.WebAddress.Length - 5);
-                                this._requestedPlugin = plugin;
-                            }
+                            
+                            
                         }
                     }
                     else if (buffer.StartsWith("POST"))

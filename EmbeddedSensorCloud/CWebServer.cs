@@ -91,9 +91,11 @@ namespace EmbeddedSensorCloud
     </head>
     <body>
         <h1>EmbeddedSensorCloud</h1>
-        <p><a href='TemperaturePlugin.html'>Temperature Plugin</a></p>
-        <p><a href='StaticPlugin.html'>Static Plugin</a></p>
-        <p><a href='NaviPlugin.html'>Navi Plugin</a></p>
+        <p><a href='http://localhost:8080/TemperaturePlugin.html'>Temperature Plugin</a></p>
+        <p><a href='http://localhost:8080/StaticPlugin.html'>Static Plugin</a></p>
+        <p><a href='http://localhost:8080/NaviPlugin.html'>Navi Plugin</a></p>
+        <br>
+        <p><a href='http://localhost:8080/'>Startseite</a></p>
     </body>
 </html>";
 

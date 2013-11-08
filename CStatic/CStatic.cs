@@ -7,8 +7,6 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using EmbeddedSensorCloud;
-using System.Drawing;
-using System.Drawing.Imaging;
 
 namespace CStatic
 {
@@ -119,9 +117,12 @@ namespace CStatic
     <body>
         <h1>StaticPlugin</h1>
         <h1>Choose your file</h1>
+        <p>html, xml, plaintext, png, jpeg and gif are supported in browser, others will get you a download</p>
         <table border='1'>" +
             files +
         @"</table>
+        <br>
+        <p><a href='http://localhost:8080/'>Startseite</a></p>
     </body>
 </html>";
 
