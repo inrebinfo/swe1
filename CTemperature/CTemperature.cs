@@ -33,7 +33,7 @@ namespace CTemperature
         public void doSomething()
         {
             DateTime now = DateTime.Now;
-            string today = now.ToString("dd-MM-yyyy");
+            string today = now.ToString("yyyy-MM-dd");
             Console.WriteLine("Today is: " + today);
 
             Console.WriteLine(_pluginName + " did something");

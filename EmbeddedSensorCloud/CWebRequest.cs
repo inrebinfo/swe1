@@ -91,11 +91,6 @@ namespace EmbeddedSensorCloud
                                     this._requestedPlugin = plugin;
                                 }
                             }
-
-                            //Console.WriteLine("requested file " + _URLObject.WebAddress);
-
-                            
-                            
                         }
                     }
                     else if (buffer.StartsWith("POST"))
@@ -114,7 +109,7 @@ namespace EmbeddedSensorCloud
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    //Console.WriteLine(ex.Message);
                 }
             }
 
