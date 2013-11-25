@@ -48,6 +48,7 @@ namespace EmbeddedSensorCloud
             {
                 _ResponseWriter.Write(h.ToString());
             }
+            _ResponseWriter.Write("Connection: close" + System.Environment.NewLine);
             _ResponseWriter.Write(System.Environment.NewLine);
             _ResponseWriter.Flush();
         }
