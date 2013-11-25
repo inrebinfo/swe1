@@ -57,7 +57,7 @@ namespace EmbeddedSensorCloud
             //we also need to read something
             StreamReader ReaderForClient = new StreamReader(StreamFromClient);
 
-            CWebRequest WebRequest = new CWebRequest(ReaderForClient, sClient);
+            CWebRequest WebRequest = new CWebRequest(ReaderForClient);
             
             CWebURL url = WebRequest.URLObject;
 

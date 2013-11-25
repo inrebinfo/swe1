@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="CWebURLTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CWebRequestTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EmbeddedSensorCloud\EmbeddedSensorCloud.csproj">

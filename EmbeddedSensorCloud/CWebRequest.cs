@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 
 namespace EmbeddedSensorCloud
 {
-    class CWebRequest
+    public class CWebRequest
     {
         private StreamReader _requestReader;
         private Socket _socket;
@@ -18,10 +18,9 @@ namespace EmbeddedSensorCloud
         private CWebURL _URLObject;
         private string _requestedPlugin;
 
-        public CWebRequest(StreamReader reader, Socket sock)
+        public CWebRequest(StreamReader reader)
         {
             this._requestReader = reader;
-            this._socket = sock;
 
             ParseRequest();
         }
