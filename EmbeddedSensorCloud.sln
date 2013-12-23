@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CNavi", "CNavi\CNavi.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmbeddedSensorCloud.Test", "EmbeddedSensorCloud.Test\EmbeddedSensorCloud.Test.csproj", "{5F59A10D-9C2B-45E9-859F-05E5DFE6852E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CStock", "CStock\CStock.csproj", "{9DDE3391-1035-483F-A867-825D2283DA02}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{5F59A10D-9C2B-45E9-859F-05E5DFE6852E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F59A10D-9C2B-45E9-859F-05E5DFE6852E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F59A10D-9C2B-45E9-859F-05E5DFE6852E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DDE3391-1035-483F-A867-825D2283DA02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DDE3391-1035-483F-A867-825D2283DA02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DDE3391-1035-483F-A867-825D2283DA02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DDE3391-1035-483F-A867-825D2283DA02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -14,4 +14,3 @@ C:\Users\Bernhard\Dropbox\SWE\EmbeddedSensorCloud\EmbeddedSensorCloud\obj\Debug\
 C:\Users\Bernhard\Dropbox\SWE\EmbeddedSensorCloud\EmbeddedSensorCloud\obj\Debug\EmbeddedSensorCloud.pdb
 C:\Users\Bernhard\Dropbox\SWE\EmbeddedSensorCloud\EmbeddedSensorCloud\bin\Debug\EmbeddedSensorCloud.exe
 C:\Users\Bernhard\Dropbox\SWE\EmbeddedSensorCloud\EmbeddedSensorCloud\bin\Debug\EmbeddedSensorCloud.pdb
-C:\Users\Bernhard\Dropbox\SWE\EmbeddedSensorCloud\EmbeddedSensorCloud\obj\Debug\EmbeddedSensorCloud.csprojResolveAssemblyReference.cache

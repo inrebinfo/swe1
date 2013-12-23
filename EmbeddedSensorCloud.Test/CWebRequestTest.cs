@@ -16,18 +16,16 @@ namespace EmbeddedSensorCloud.Test
             string _pluginname = "TestPlugin";
             string _header = @"GET /TestPlugin.html HTTP/1.1
 Host: localhost:8080" + System.Environment.NewLine + System.Environment.NewLine;
-            //Socket _sock;
+            
 
-            // convert string to stream
             byte[] byteArray = System.Text.Encoding.ASCII.GetBytes(_header);
             MemoryStream stream = new MemoryStream(byteArray);
 
-            // convert stream to string
             StreamReader _reader = new StreamReader(stream);
 
             var _WebReq = new CWebRequest(_reader);
 
-            Assert.AreEqual(_pluginname, _WebReq.RequestedPlugin, "message");
+            Assert.AreEqual(_pluginname, _WebReq.RequestedPlugin);
         }
     }
 }

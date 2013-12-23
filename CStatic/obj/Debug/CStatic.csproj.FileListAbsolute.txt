@@ -5,3 +5,10 @@ D:\Dropbox\SWE\EmbeddedSensorCloud\CStatic\bin\Debug\EmbeddedSensorCloud.pdb
 D:\Dropbox\SWE\EmbeddedSensorCloud\CStatic\obj\Debug\CStatic.dll
 D:\Dropbox\SWE\EmbeddedSensorCloud\CStatic\obj\Debug\CStatic.pdb
 D:\Dropbox\SWE\EmbeddedSensorCloud\CStatic\obj\Debug\CStatic.csprojResolveAssemblyReference.cache
+C:\Users\Bernhard\Dropbox\SWE\EmbeddedSensorCloud\CStatic\bin\Debug\CStatic.dll
+C:\Users\Bernhard\Dropbox\SWE\EmbeddedSensorCloud\CStatic\bin\Debug\CStatic.pdb
+C:\Users\Bernhard\Dropbox\SWE\EmbeddedSensorCloud\CStatic\bin\Debug\EmbeddedSensorCloud.exe
+C:\Users\Bernhard\Dropbox\SWE\EmbeddedSensorCloud\CStatic\bin\Debug\EmbeddedSensorCloud.pdb
+C:\Users\Bernhard\Dropbox\SWE\EmbeddedSensorCloud\CStatic\obj\Debug\CStatic.csprojResolveAssemblyReference.cache
+C:\Users\Bernhard\Dropbox\SWE\EmbeddedSensorCloud\CStatic\obj\Debug\CStatic.dll
+C:\Users\Bernhard\Dropbox\SWE\EmbeddedSensorCloud\CStatic\obj\Debug\CStatic.pdb

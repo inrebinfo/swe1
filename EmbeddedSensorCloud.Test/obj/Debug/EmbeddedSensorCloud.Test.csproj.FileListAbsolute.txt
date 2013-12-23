@@ -5,3 +5,10 @@ D:\Dropbox\SWE\EmbeddedSensorCloud\EmbeddedSensorCloud.Test\bin\Debug\EmbeddedSe
 D:\Dropbox\SWE\EmbeddedSensorCloud\EmbeddedSensorCloud.Test\obj\Debug\EmbeddedSensorCloud.Test.csprojResolveAssemblyReference.cache
 D:\Dropbox\SWE\EmbeddedSensorCloud\EmbeddedSensorCloud.Test\obj\Debug\EmbeddedSensorCloud.Test.dll
 D:\Dropbox\SWE\EmbeddedSensorCloud\EmbeddedSensorCloud.Test\obj\Debug\EmbeddedSensorCloud.Test.pdb
+C:\Users\Bernhard\Dropbox\SWE\EmbeddedSensorCloud\EmbeddedSensorCloud.Test\bin\Debug\EmbeddedSensorCloud.Test.dll
+C:\Users\Bernhard\Dropbox\SWE\EmbeddedSensorCloud\EmbeddedSensorCloud.Test\bin\Debug\EmbeddedSensorCloud.Test.pdb
+C:\Users\Bernhard\Dropbox\SWE\EmbeddedSensorCloud\EmbeddedSensorCloud.Test\bin\Debug\EmbeddedSensorCloud.exe
+C:\Users\Bernhard\Dropbox\SWE\EmbeddedSensorCloud\EmbeddedSensorCloud.Test\bin\Debug\EmbeddedSensorCloud.pdb
+C:\Users\Bernhard\Dropbox\SWE\EmbeddedSensorCloud\EmbeddedSensorCloud.Test\obj\Debug\EmbeddedSensorCloud.Test.csprojResolveAssemblyReference.cache
+C:\Users\Bernhard\Dropbox\SWE\EmbeddedSensorCloud\EmbeddedSensorCloud.Test\obj\Debug\EmbeddedSensorCloud.Test.dll
+C:\Users\Bernhard\Dropbox\SWE\EmbeddedSensorCloud\EmbeddedSensorCloud.Test\obj\Debug\EmbeddedSensorCloud.Test.pdb

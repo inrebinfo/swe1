@@ -1,0 +1,7 @@
+D:\Dropbox\SWE\EmbeddedSensorCloud\CStock\obj\Debug\CStock.csprojResolveAssemblyReference.cache
+D:\Dropbox\SWE\EmbeddedSensorCloud\CStock\bin\Debug\CStock.dll
+D:\Dropbox\SWE\EmbeddedSensorCloud\CStock\bin\Debug\CStock.pdb
+D:\Dropbox\SWE\EmbeddedSensorCloud\CStock\bin\Debug\EmbeddedSensorCloud.exe
+D:\Dropbox\SWE\EmbeddedSensorCloud\CStock\bin\Debug\EmbeddedSensorCloud.pdb
+D:\Dropbox\SWE\EmbeddedSensorCloud\CStock\obj\Debug\CStock.dll
+D:\Dropbox\SWE\EmbeddedSensorCloud\CStock\obj\Debug\CStock.pdb
