@@ -357,6 +357,14 @@ namespace EmbeddedSensorCloud
                 }
             }
         }
+
+        public bool IsLocked
+        {
+            get
+            {
+                return _locked;
+            }
+        }
     }
 
     public class Address

@@ -15,6 +15,7 @@ namespace EmbeddedSensorCloud
         private StreamWriter _writer;
         private CWebURL _url;
         private SqlConnection _SQLCon;
+        private string _xml;
 
         public void Load(StreamWriter writer, CWebURL url)
         {
@@ -165,14 +166,14 @@ namespace EmbeddedSensorCloud
                             Console.WriteLine(ex.Message);
                         }
 
-                        string xml = "<?xml version='1.0' encoding='UTF-8' standalone='yes'?><temperatures day='" + selectday + @"'>" + res + "</temperatures>";
+                        _xml = "<?xml version='1.0' encoding='UTF-8' standalone='yes'?><temperatures day='" + selectday + @"'>" + res + "</temperatures>";
 
-                        int size = ASCIIEncoding.ASCII.GetByteCount(xml);
+                        int size = ASCIIEncoding.ASCII.GetByteCount(_xml);
 
                         CWebResponse response = new CWebResponse(_writer);
-                        response.ContentLength = xml.Length;
+                        response.ContentLength = _xml.Length;
                         response.ContentType = "text/xml";
-                        response.WriteResponse(xml);
+                        response.WriteResponse(_xml);
 
                         #endregion
                     }
@@ -249,6 +250,14 @@ namespace EmbeddedSensorCloud
             get
             {
                 return this._pluginName;
+            }
+        }
+
+        public string XML
+        {
+            get
+            {
+                return this._xml;
             }
         }
     }

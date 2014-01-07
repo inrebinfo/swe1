@@ -14,19 +14,33 @@ namespace EmbeddedSensorCloud.Test
         [TestMethod]
         public void CStatic_png_correctly_parsed()
         {
-            string myFile = "someImage.png";
-
             MemoryStream stream = new MemoryStream();
 
             StreamWriter writer = new StreamWriter(stream);
             CWebURL urlobject = new CWebURL("StaticPlugin.html", "file=someImage.png");
-            
+
             CStatic staticPlugin = new CStatic();
 
             staticPlugin.Load(writer, urlobject);
             staticPlugin.doSomething();
 
             Assert.AreEqual("png", staticPlugin.FileExtension);
+        }
+
+        [TestMethod]
+        public void CStatic_png_false_parsed()
+        {
+            MemoryStream stream = new MemoryStream();
+
+            StreamWriter writer = new StreamWriter(stream);
+            CWebURL urlobject = new CWebURL("StaticPlugin.html", "file=someImage.exe");
+
+            CStatic staticPlugin = new CStatic();
+
+            staticPlugin.Load(writer, urlobject);
+            staticPlugin.doSomething();
+
+            Assert.AreNotEqual("png", staticPlugin.FileExtension);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using EmbeddedSensorCloud;
@@ -80,6 +81,25 @@ Host: localhost:8080" + System.Environment.NewLine + System.Environment.NewLine;
             var _WebReq = new CWebRequest(_reader);
 
             Assert.AreEqual(_pluginname, _WebReq.RequestedPlugin);
+        }
+
+        [TestMethod]
+        public void CWebRequest_ParseRequest_REST_Parameter_correct_Parsed()
+        {
+            string _header = @"GET /GetTemperature/2014-01-07 HTTP/1.1
+Host: localhost:8080" + System.Environment.NewLine + System.Environment.NewLine;
+
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            dict.Add("rest", "2014-01-07");
+
+            byte[] byteArray = System.Text.Encoding.ASCII.GetBytes(_header);
+            MemoryStream stream = new MemoryStream(byteArray);
+
+            StreamReader _reader = new StreamReader(stream);
+
+            var _WebReq = new CWebRequest(_reader);
+
+            Assert.AreEqual(dict["rest"], "2014-01-07");
         }
     }
 }

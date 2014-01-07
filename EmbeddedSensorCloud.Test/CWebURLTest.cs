@@ -22,5 +22,14 @@ namespace EmbeddedSensorCloud.Test
 
             Assert.AreEqual(_dictToCheck.Count, _URL.WebParameters.Count);
         }
+
+        [TestMethod]
+        public void CWebURL_No_Parameters_given()
+        {
+            string _adressToTest = "somefile.html";
+            var _URL = new CWebURL(_adressToTest);
+
+            Assert.AreEqual(_adressToTest, _URL.WebAddress);
+        }
     }
 }

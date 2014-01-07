@@ -50,11 +50,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="CNaviTest.cs" />
     <Compile Include="CStaticTest.cs" />
-    <Compile Include="CWebServerTest.cs" />
     <Compile Include="CWebURLTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CWebRequestTest.cs" />
+    <Compile Include="CTemperatureTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CNavi\CNavi.csproj">

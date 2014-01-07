@@ -11,12 +11,12 @@ using System.IO;
 
 namespace EmbeddedSensorCloud
 {
-    public class CWebServer
+    public class CWebServer : IDisposable
     {
 
         private bool _isRunning;
         private ArrayList _loadedPlugins;
-
+        private TcpListener listener;
         public void Start()
         {
             new Thread(RunServer).Start();
@@ -31,7 +31,7 @@ namespace EmbeddedSensorCloud
         {
             Console.WriteLine("Server now listening on port 8080\n");
             //start listener on port 1337
-            TcpListener listener = new TcpListener(IPAddress.Any, 8080);
+            listener = new TcpListener(IPAddress.Any, 8080);
             listener.Start();
 
             //loop for server instances
@@ -123,6 +123,11 @@ namespace EmbeddedSensorCloud
         {
             get { return _isRunning; }
             set { this._isRunning = value; }
+        }
+
+        public void Dispose()
+        {
+            listener.Stop();
         }
     }
 }
