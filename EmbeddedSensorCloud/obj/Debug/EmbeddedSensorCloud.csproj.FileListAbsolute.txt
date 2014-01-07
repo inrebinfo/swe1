@@ -1,0 +1,22 @@
+D:\Dropbox\TW\3. Semester\SWE1\EmbeddedSensorCloud\EmbeddedSensorCloud\bin\Debug\EmbeddedSensorCloud.exe.config
+D:\Dropbox\TW\3. Semester\SWE1\EmbeddedSensorCloud\EmbeddedSensorCloud\bin\Debug\EmbeddedSensorCloud.exe
+D:\Dropbox\TW\3. Semester\SWE1\EmbeddedSensorCloud\EmbeddedSensorCloud\bin\Debug\EmbeddedSensorCloud.pdb
+D:\Dropbox\TW\3. Semester\SWE1\EmbeddedSensorCloud\EmbeddedSensorCloud\obj\Debug\EmbeddedSensorCloud.csprojResolveAssemblyReference.cache
+D:\Dropbox\TW\3. Semester\SWE1\EmbeddedSensorCloud\EmbeddedSensorCloud\obj\Debug\EmbeddedSensorCloud.exe
+D:\Dropbox\TW\3. Semester\SWE1\EmbeddedSensorCloud\EmbeddedSensorCloud\obj\Debug\EmbeddedSensorCloud.pdb
+D:\Dropbox\SWE\EmbeddedSensorCloud\EmbeddedSensorCloud\bin\Debug\EmbeddedSensorCloud.exe.config
+D:\Dropbox\SWE\EmbeddedSensorCloud\EmbeddedSensorCloud\obj\Debug\EmbeddedSensorCloud.exe
+D:\Dropbox\SWE\EmbeddedSensorCloud\EmbeddedSensorCloud\obj\Debug\EmbeddedSensorCloud.pdb
+D:\Dropbox\SWE\EmbeddedSensorCloud\EmbeddedSensorCloud\bin\Debug\EmbeddedSensorCloud.exe
+D:\Dropbox\SWE\EmbeddedSensorCloud\EmbeddedSensorCloud\bin\Debug\EmbeddedSensorCloud.pdb
+C:\Users\Bernhard\Dropbox\SWE\EmbeddedSensorCloud\EmbeddedSensorCloud\bin\Debug\EmbeddedSensorCloud.exe.config
+C:\Users\Bernhard\Dropbox\SWE\EmbeddedSensorCloud\EmbeddedSensorCloud\obj\Debug\EmbeddedSensorCloud.exe
+C:\Users\Bernhard\Dropbox\SWE\EmbeddedSensorCloud\EmbeddedSensorCloud\obj\Debug\EmbeddedSensorCloud.pdb
+C:\Users\Bernhard\Dropbox\SWE\EmbeddedSensorCloud\EmbeddedSensorCloud\bin\Debug\EmbeddedSensorCloud.exe
+C:\Users\Bernhard\Dropbox\SWE\EmbeddedSensorCloud\EmbeddedSensorCloud\bin\Debug\EmbeddedSensorCloud.pdb
+D:\Dropbox\SWE\EmbeddedSensorCloud\EmbeddedSensorCloud\obj\Debug\EmbeddedSensorCloud.csprojResolveAssemblyReference.cache
+C:\Users\Zexion\Desktop\EmbeddedSensorCloud\EmbeddedSensorCloud\bin\Debug\EmbeddedSensorCloud.exe.config
+C:\Users\Zexion\Desktop\EmbeddedSensorCloud\EmbeddedSensorCloud\obj\Debug\EmbeddedSensorCloud.exe
+C:\Users\Zexion\Desktop\EmbeddedSensorCloud\EmbeddedSensorCloud\obj\Debug\EmbeddedSensorCloud.pdb
+C:\Users\Zexion\Desktop\EmbeddedSensorCloud\EmbeddedSensorCloud\bin\Debug\EmbeddedSensorCloud.exe
+C:\Users\Zexion\Desktop\EmbeddedSensorCloud\EmbeddedSensorCloud\bin\Debug\EmbeddedSensorCloud.pdb
