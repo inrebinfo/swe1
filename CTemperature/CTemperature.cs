@@ -16,6 +16,7 @@ namespace EmbeddedSensorCloud
         private CWebURL _url;
         private SqlConnection _SQLCon;
         private string _xml;
+        private bool _noParams = false;
 
         public void Load(StreamWriter writer, CWebURL url)
         {
@@ -42,14 +43,15 @@ namespace EmbeddedSensorCloud
             
             if (_url.WebParameters.Count > 0)
             {
-
                 Console.WriteLine("parameters given");
 
                 foreach (KeyValuePair<string, string> entry in _url.WebParameters)
                 {
                     if (entry.Key == "day")
                     {
-                        #region normal request
+                        try
+                        {
+                            #region normal request
 
                         string command = "";
                         string selectday = "";
@@ -125,10 +127,17 @@ namespace EmbeddedSensorCloud
                         response.WriteResponse(html);
 
                         #endregion
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
                     }
                     else if (entry.Key == "rest")
                     {
-                        #region rest request
+                        try
+                        {
+                            #region rest request
 
                         Console.WriteLine("rest request");
 
@@ -176,12 +185,21 @@ namespace EmbeddedSensorCloud
                         response.WriteResponse(_xml);
 
                         #endregion
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
                     }
                 }
             }
             else
             {
-                #region no parameters given
+                try
+                {
+                    #region no parameters given
+
+                _noParams = true;
 
                 Console.WriteLine("no parameters given");
                 
@@ -237,6 +255,11 @@ namespace EmbeddedSensorCloud
                 response.WriteResponse(html);
 
                 #endregion
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
         }
 
@@ -258,6 +281,22 @@ namespace EmbeddedSensorCloud
             get
             {
                 return this._xml;
+            }
+        }
+
+        public SqlConnection SQLCon
+        {
+            get
+            {
+                return _SQLCon;
+            }
+        }
+
+        public bool NoParams
+        {
+            get
+            {
+                return _noParams;
             }
         }
     }

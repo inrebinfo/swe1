@@ -18,6 +18,10 @@ namespace EmbeddedSensorCloud
         private string _pluginName = "StockPlugin";
         private StreamWriter _writer;
         private CWebURL _url;
+        private IEnumerable<XNode> _stocknodes;
+        private bool _isSent = false;
+        private bool _siteOpen = false;
+        private bool _noParams = false;
 
         public void Load(StreamWriter writer, CWebURL url)
         {
@@ -34,49 +38,61 @@ namespace EmbeddedSensorCloud
                 {
                     if (entry.Key == "symbol")
                     {
-                        string msg = "<table border=1><tr><th>Key</th><th>Value</th></tr>";
-                        string file = @"";
-
-                        using (WebClient client = new WebClient())
+                        try
                         {
-                            string htmlCode = client.DownloadString("http://www.webservicex.net/stockquote.asmx/GetQuote?symbol="+entry.Value);
-                            file = htmlCode;
-                        }
+                            #region symbol
 
-                        file = file.Replace("\"", "'");
-                        file = file.Replace("&lt;", "<");
-                        file = file.Replace("&gt;", ">");
-                        file = file.Replace("<string xmlns='http://www.webserviceX.NET/'>", "");
-                        file = file.Replace("</string>", "");
-                        file = file.Replace("<StockQuotes>", "");
-                        file = file.Replace("</StockQuotes>", "");
-                        file = file.Replace("><", ">" + System.Environment.NewLine + "<");
+                            string msg = "<table border=1><tr><th>Key</th><th>Value</th></tr>";
+                            string file = @"";
 
-                        XDocument doc = XDocument.Parse(file);
-                        var stocknodes = from s in doc.DescendantNodes()
-                                         select s;
-
-                        foreach(XNode node in stocknodes)
-                        {
-                            if (node is XElement)
+                            using (WebClient client = new WebClient())
                             {
-                                XElement ele = (XElement)node;
-                                if (ele.Name != "Stock")
+                                try
                                 {
-                                    msg += "<tr><td>" + ele.Name + "</td>";
-                                    Console.WriteLine((ele as XElement).Name);
+                                    string htmlCode = client.DownloadString("http://www.webservicex.net/stockquote.asmx/GetQuote?symbol=" + entry.Value);
+                                    file = htmlCode;
+                                    _siteOpen = true;
+                                }
+                                catch (Exception ex)
+                                {
+                                    Console.WriteLine(ex.Message);
                                 }
                             }
-                            else
+
+                            file = file.Replace("\"", "'");
+                            file = file.Replace("&lt;", "<");
+                            file = file.Replace("&gt;", ">");
+                            file = file.Replace("<string xmlns='http://www.webserviceX.NET/'>", "");
+                            file = file.Replace("</string>", "");
+                            file = file.Replace("<StockQuotes>", "");
+                            file = file.Replace("</StockQuotes>", "");
+                            file = file.Replace("><", ">" + System.Environment.NewLine + "<");
+
+                            XDocument doc = XDocument.Parse(file);
+                            _stocknodes = from s in doc.DescendantNodes()
+                                          select s;
+
+                            foreach (XNode node in _stocknodes)
                             {
-                                msg += "<td>" + node + "</td></tr>";
-                                Console.WriteLine(node);
+                                if (node is XElement)
+                                {
+                                    XElement ele = (XElement)node;
+                                    if (ele.Name != "Stock")
+                                    {
+                                        msg += "<tr><td>" + ele.Name + "</td>";
+                                        Console.WriteLine((ele as XElement).Name);
+                                    }
+                                }
+                                else
+                                {
+                                    msg += "<td>" + node + "</td></tr>";
+                                    Console.WriteLine(node);
+                                }
                             }
-                        }
 
-                        msg += "</table>";
+                            msg += "</table>";
 
-                        string html = @"<html>
+                            string html = @"<html>
     <head>
         <title>EmbeddedSensorCloud</title>
     </head>
@@ -91,18 +107,31 @@ namespace EmbeddedSensorCloud
     </body>
 </html>";
 
-                        int size = ASCIIEncoding.ASCII.GetByteCount(html);
+                            int size = ASCIIEncoding.ASCII.GetByteCount(html);
 
-                        CWebResponse response = new CWebResponse(_writer);
-                        response.ContentLength = html.Length;
-                        response.ContentType = "text/html";
-                        response.WriteResponse(html);
-                    }
+                            CWebResponse response = new CWebResponse(_writer);
+                            response.ContentLength = html.Length;
+                            response.ContentType = "text/html";
+                            response.WriteResponse(html);
+
+                            _isSent = true;
+
+                            #endregion
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                            _isSent = false;
+                        }
+                     }
                 }
             }
             else
             {
-                #region no params form
+                try
+                {
+                    #region no params form
+                _noParams = true;
                 string html = @"
 <html>
     <head>
@@ -122,7 +151,12 @@ namespace EmbeddedSensorCloud
                 response.ContentLength = html.Length;
                 response.ContentType = "text/html";
                 response.WriteResponse(html);
-                #endregion
+                    #endregion
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
         }
 
@@ -153,6 +187,37 @@ namespace EmbeddedSensorCloud
             });
 
             return output;
+        }
+
+        public IEnumerable<XNode> Nodes
+        {
+            get
+            {
+                return _stocknodes;
+            }
+        }
+
+        public bool IsSent
+        {
+            get
+            {
+                return _isSent;
+            }
+        }
+
+        public bool SiteOpen
+        {
+            get
+            {
+                return _siteOpen;
+            }
+        }
+        public bool NoParams
+        {
+            get
+            {
+                return _noParams;
+            }
         }
     }
 }

@@ -42,5 +42,21 @@ namespace EmbeddedSensorCloud.Test
 
             Assert.AreNotEqual("png", staticPlugin.FileExtension);
         }
+
+        [TestMethod]
+        public void CStatic_No_Parameters_given()
+        {
+            MemoryStream stream = new MemoryStream();
+
+            StreamWriter writer = new StreamWriter(stream);
+            CWebURL urlobject = new CWebURL("TemperaturePlugin.html");
+
+            CStatic staticPlugin = new CStatic();
+
+            staticPlugin.Load(writer, urlobject);
+            staticPlugin.doSomething();
+
+            Assert.AreEqual(true, staticPlugin.NoParams);
+        }
     }
 }

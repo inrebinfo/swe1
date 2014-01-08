@@ -36,6 +36,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -52,6 +55,7 @@
   <ItemGroup>
     <Compile Include="CNaviTest.cs" />
     <Compile Include="CStaticTest.cs" />
+    <Compile Include="CStockTest.cs" />
     <Compile Include="CWebURLTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CWebRequestTest.cs" />

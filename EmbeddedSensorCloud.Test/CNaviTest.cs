@@ -42,5 +42,21 @@ namespace EmbeddedSensorCloud.Test
 
             Assert.AreEqual(true, naviPlugin.IsLocked);
         }
+
+        [TestMethod]
+        public void CNavi_No_Parameters_given()
+        {
+            MemoryStream stream = new MemoryStream();
+
+            StreamWriter writer = new StreamWriter(stream);
+            CWebURL urlobject = new CWebURL("TemperaturePlugin.html");
+
+            CNavi naviPlugin = new CNavi();
+
+            naviPlugin.Load(writer, urlobject);
+            naviPlugin.doSomething();
+
+            Assert.AreEqual(true, naviPlugin.NoParams);
+        }
     }
 }

@@ -17,6 +17,7 @@ namespace EmbeddedSensorCloud
         private CWebURL _url;
 
         private string _file;
+        private bool _noParams = false;
 
         public void Load(StreamWriter writer, CWebURL url)
         {
@@ -33,6 +34,8 @@ namespace EmbeddedSensorCloud
             {
                 try
                 {
+                    #region filename
+
                     string filename = "";
 
                     foreach (KeyValuePair<string, string> entry in _url.WebParameters)
@@ -95,6 +98,8 @@ namespace EmbeddedSensorCloud
 
                     response.WriteResponse(file);
                     //memory.Close();
+
+                    #endregion
                 }
                 catch(Exception ex)
                 {
@@ -103,9 +108,14 @@ namespace EmbeddedSensorCloud
             }
             else
             {
+                try
+                {
+                    #region no params
+
                 string[] filePaths = Directory.GetFiles(".");
 
                 string files = "";
+                _noParams = true;
 
                 foreach (string s in filePaths)
                 {
@@ -133,6 +143,13 @@ namespace EmbeddedSensorCloud
                 response.ContentLength = html.Length;
                 response.ContentType = "text/html";
                 response.WriteResponse(html);
+
+                    #endregion
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
         }
 
@@ -157,6 +174,14 @@ namespace EmbeddedSensorCloud
                 string[] realfile = arr1[arr1.Length - 1].Split('.');
 
                 return realfile[1];
+            }
+        }
+
+        public bool NoParams
+        {
+            get
+            {
+                return _noParams;
             }
         }
     }

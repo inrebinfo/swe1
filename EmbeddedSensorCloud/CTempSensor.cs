@@ -20,21 +20,28 @@ namespace EmbeddedSensorCloud
 
         private void CreateData(object source, ElapsedEventArgs e)
         {
-            Random randomNumb = new Random();
-            float result = randomNumb.Next(100, 300);
-            float temp = (result / 10);
-
-            using (SqlConnection dbcon = new SqlConnection(@"Data Source=.\SqlExpress;Initial Catalog=EmbeddedSensorCloud;Integrated Security=true;"))
+            try
             {
-                dbcon.Open();
+                Random randomNumb = new Random();
+                float result = randomNumb.Next(100, 300);
+                float temp = (result / 10);
 
-                string temp_str = temp.ToString();
-                temp_str = temp_str.Replace(",", ".");
+                using (SqlConnection dbcon = new SqlConnection(@"Data Source=.\SqlExpress;Initial Catalog=EmbeddedSensorCloud;Integrated Security=true;"))
+                {
+                    dbcon.Open();
 
-                SqlCommand insert = new SqlCommand(@"INSERT INTO [temperatures] ([day], [temp]) VALUES (GETDATE(), " + temp_str + ")", dbcon);
-                insert.ExecuteNonQuery();
+                    string temp_str = temp.ToString();
+                    temp_str = temp_str.Replace(",", ".");
 
-                dbcon.Close();
+                    SqlCommand insert = new SqlCommand(@"INSERT INTO [temperatures] ([day], [temp]) VALUES (GETDATE(), " + temp_str + ")", dbcon);
+                    insert.ExecuteNonQuery();
+
+                    dbcon.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
     }

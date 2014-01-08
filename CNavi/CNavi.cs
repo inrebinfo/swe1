@@ -18,6 +18,7 @@ namespace EmbeddedSensorCloud
         private CWebURL _url;
         private static Dictionary<string, List<string>> _Locations = new Dictionary<string, List<string>>();
         private static bool _locked = false;
+        private bool _noParams = false;
 
         public void Load(StreamWriter writer, CWebURL url)
         {
@@ -30,7 +31,6 @@ namespace EmbeddedSensorCloud
         {
             if (_url.WebParameters.Count > 0)
             {
-
                 foreach (KeyValuePair<string, string> entry in _url.WebParameters)
                 {
                     if (entry.Key == "mode")
@@ -38,25 +38,27 @@ namespace EmbeddedSensorCloud
                         
                         if (entry.Value == "prepare")
                         {
-                            #region prepare
-                            string msg = "";
-                            if (_locked == false)
-                            {
-                                _locked = true;
+                            /*try
+                            {*/
+                                #region prepare
+                                string msg = "";
+                                if (_locked == false)
+                                {
+                                    _locked = true;
 
-                                Thread thread = new Thread(PrepareData);
-                                thread.Start();
+                                    Thread thread = new Thread(PrepareData);
+                                    thread.Start();
 
-                                msg = "Please wait until data is completelyup to date.";
+                                    msg = "Please wait until data is completelyup to date.";
 
-                            }
-                            else
-                            {
-                                msg = "The data is to be updated. Please try again later.";
-                            }
+                                }
+                                else
+                                {
+                                    msg = "The data is to be updated. Please try again later.";
+                                }
 
-                            //send response
-                            string html = @"<html>
+                                //send response
+                                string html = @"<html>
     <head>
         <title>EmbeddedSensorCloud</title>
     </head>
@@ -66,29 +68,92 @@ namespace EmbeddedSensorCloud
         <p><a href='http://localhost:8080/'>Startseite</a></p><p><a href='http://localhost:8080/NaviPlugin.html'>Go Back</a></p>
     </body>
 </html>";
-                            int size = ASCIIEncoding.ASCII.GetByteCount(html);
+                                int size = ASCIIEncoding.ASCII.GetByteCount(html);
 
-                            CWebResponse response = new CWebResponse(_writer);
-                            response.ContentLength = html.Length;
-                            response.ContentType = "text/html";
-                            response.WriteResponse(html);
-                            #endregion
+                                CWebResponse response = new CWebResponse(_writer);
+                                response.ContentLength = html.Length;
+                                response.ContentType = "text/html";
+                                response.WriteResponse(html);
+                                #endregion
+                            /*}
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }*/
                         }
                         else if (entry.Value == "search")
                         {
-                            #region searchform
+                            try
+                            {
+                                #region searchform
+                                if (_locked == true)
+                                {   
+                                    string html = @"<html>
+        <head>
+            <title>EmbeddedSensorCloud</title>
+        </head>
+        <body>
+            <h1>NaviPlugin</h1>
+            <p>The data is to be updated. Please try again later.</p>
+            <p><a href='http://localhost:8080/'>Startseite</a></p><p><a href='http://localhost:8080/NaviPlugin.html'>Go Back</a></p>
+        </body>
+    </html>";
+
+                                    int size = ASCIIEncoding.ASCII.GetByteCount(html);
+
+                                    CWebResponse response = new CWebResponse(_writer);
+                                    response.ContentLength = html.Length;
+                                    response.ContentType = "text/html";
+                                    response.WriteResponse(html);
+                                }
+                                else
+                                {
+                                    string html = @"<html>
+        <head>
+            <title>EmbeddedSensorCloud</title>
+        </head>
+        <body>
+            <h1>NaviPlugin</h1>
+            <form method='post' action='http://localhost:8080/NaviPlugin.html'>
+                Enter Streetname <input type='text' name='street' value='Barrett Lane'><br>
+                <input type='submit'>
+            </form>
+            <p><a href='http://localhost:8080/'>Startseite</a></p><p><a href='http://localhost:8080/NaviPlugin.html'>Go Back</a></p>
+        </body>
+    </html>";
+
+                                    int size = ASCIIEncoding.ASCII.GetByteCount(html);
+
+                                    CWebResponse response = new CWebResponse(_writer);
+                                    response.ContentLength = html.Length;
+                                    response.ContentType = "text/html";
+                                    response.WriteResponse(html);
+                                }
+                                #endregion
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                        }
+                    }
+                    else if (entry.Key == "street")
+                    {
+                        try
+                        {
+                            #region street
                             if (_locked == true)
-                            {   
+                            {
                                 string html = @"<html>
-    <head>
-        <title>EmbeddedSensorCloud</title>
-    </head>
-    <body>
-        <h1>NaviPlugin</h1>
-        <p>The data is to be updated. Please try again later.</p>
-        <p><a href='http://localhost:8080/'>Startseite</a></p><p><a href='http://localhost:8080/NaviPlugin.html'>Go Back</a></p>
-    </body>
-</html>";
+        <head>
+            <title>EmbeddedSensorCloud</title>
+        </head>
+        <body>
+            <h1>NaviPlugin</h1>
+            <p>The data is to be updated. Please try again later.</p>
+            <p><a href='http://localhost:8080/'>Startseite</a></p><p><a href='http://localhost:8080/NaviPlugin.html'>Go Back</a></p>
+        </body>
+    </html>";
 
                                 int size = ASCIIEncoding.ASCII.GetByteCount(html);
 
@@ -99,19 +164,44 @@ namespace EmbeddedSensorCloud
                             }
                             else
                             {
+                                string DecodedParam = HttpUtility.UrlDecode(entry.Value.Replace("+", " "));
+
+                                string msg = "";
+
+                                foreach (KeyValuePair<string, List<string>> location in _Locations)
+                                {
+                                    try
+                                    {
+                                        if (location.Key == DecodedParam)
+                                        {
+                                            int counter = location.Value.Count;
+
+                                            msg += "<table><tr><th>City</th><th>Street</th></tr>";
+
+                                            for (int i = 0; i < counter; i++)
+                                            {
+                                                msg += "<tr><td>" + location.Value[i] + "</td><td>" + location.Key + "</td></tr>";
+                                            }
+
+                                            msg += "</table>";
+                                        }
+                                    }
+                                    catch
+                                    {
+                                        msg = "<p>No results.</p>";
+                                    }
+                                }
+
                                 string html = @"<html>
-    <head>
-        <title>EmbeddedSensorCloud</title>
-    </head>
-    <body>
-        <h1>NaviPlugin</h1>
-        <form method='post' action='http://localhost:8080/NaviPlugin.html'>
-            Enter Streetname <input type='text' name='street' value='Barrett Lane'><br>
-            <input type='submit'>
-        </form>
-        <p><a href='http://localhost:8080/'>Startseite</a></p><p><a href='http://localhost:8080/NaviPlugin.html'>Go Back</a></p>
-    </body>
-</html>";
+        <head>
+            <title>EmbeddedSensorCloud</title>
+        </head>
+        <body>
+            <h1>NaviPlugin</h1>
+            " + msg + @"
+            <p><a href='http://localhost:8080/'>Startseite</a></p><p><a href='http://localhost:8080/NaviPlugin.html'>Go Back</a></p>
+        </body>
+    </html>";
 
                                 int size = ASCIIEncoding.ASCII.GetByteCount(html);
 
@@ -122,85 +212,21 @@ namespace EmbeddedSensorCloud
                             }
                             #endregion
                         }
-                    }
-                    else if (entry.Key == "street")
-                    {
-                        #region street
-                        if (_locked == true)
+                        catch (Exception ex)
                         {
-                            string html = @"<html>
-    <head>
-        <title>EmbeddedSensorCloud</title>
-    </head>
-    <body>
-        <h1>NaviPlugin</h1>
-        <p>The data is to be updated. Please try again later.</p>
-        <p><a href='http://localhost:8080/'>Startseite</a></p><p><a href='http://localhost:8080/NaviPlugin.html'>Go Back</a></p>
-    </body>
-</html>";
-
-                            int size = ASCIIEncoding.ASCII.GetByteCount(html);
-
-                            CWebResponse response = new CWebResponse(_writer);
-                            response.ContentLength = html.Length;
-                            response.ContentType = "text/html";
-                            response.WriteResponse(html);
+                            Console.WriteLine(ex.Message);
                         }
-                        else
-                        {
-                            string DecodedParam = HttpUtility.UrlDecode(entry.Value.Replace("+", " "));
-
-                            string msg = "";
-
-                            foreach (KeyValuePair<string, List<string>> location in _Locations)
-                            {
-                                try
-                                {
-                                    if (location.Key == DecodedParam)
-                                    {
-                                        int counter = location.Value.Count;
-
-                                        msg += "<table><tr><th>City</th><th>Street</th></tr>";
-
-                                        for (int i = 0; i < counter; i++)
-                                        {
-                                            msg += "<tr><td>" + location.Value[i] + "</td><td>" + location.Key + "</td></tr>";
-                                        }
-
-                                        msg += "</table>";
-                                    }
-                                }
-                                catch
-                                {
-                                    msg = "<p>No results.</p>";
-                                }
-                            }
-
-                            string html = @"<html>
-    <head>
-        <title>EmbeddedSensorCloud</title>
-    </head>
-    <body>
-        <h1>NaviPlugin</h1>
-        " + msg + @"
-        <p><a href='http://localhost:8080/'>Startseite</a></p><p><a href='http://localhost:8080/NaviPlugin.html'>Go Back</a></p>
-    </body>
-</html>";
-
-                            int size = ASCIIEncoding.ASCII.GetByteCount(html);
-
-                            CWebResponse response = new CWebResponse(_writer);
-                            response.ContentLength = html.Length;
-                            response.ContentType = "text/html";
-                            response.WriteResponse(html);
-                        }
-                        #endregion
                     }
                 }
             }
             else
             {
-                #region no parmaters
+                try
+                {
+                    #region no parmaters
+
+                _noParams = true;
+
                 if (_locked == true)
                 {
                     string html = @"<html>
@@ -245,6 +271,11 @@ namespace EmbeddedSensorCloud
                     response.WriteResponse(html);
                 }
                 #endregion
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
 
         }
@@ -253,8 +284,8 @@ namespace EmbeddedSensorCloud
         {
             DateTime date1 = DateTime.Now;
             Console.WriteLine(date1.ToString());
-            
-            string path = @"C:\Users\Zexion\Desktop\antarctica-latest.osm\antarctica-latest.osm";
+
+            string path = @"C:\Users\Zexion\Desktop\austria-latest.osm\austria-latest.osm";
             Console.WriteLine(path);
 
             using (var fs = File.OpenRead(path))
@@ -363,6 +394,14 @@ namespace EmbeddedSensorCloud
             get
             {
                 return _locked;
+            }
+        }
+
+        public bool NoParams
+        {
+            get
+            {
+                return _noParams;
             }
         }
     }
